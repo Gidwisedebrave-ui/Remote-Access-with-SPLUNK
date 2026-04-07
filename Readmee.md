@@ -1,20 +1,35 @@
-# Remote Access Investigation via Splunk
+## Objective of this lab
+"The goal of this investigation was to identify potential unauthorized remote access to the DESKTOP-AG7VA7Q workstation. Using Splunk, I filtered security logs to isolate successful logons originating from remote IP addresses, successfully identifying a remote session resume by the user HP from source IP 192.168.1.188."
 
-## Overview
-This project documents the process of identifying remote access events on Windows systems using Splunk. Specifically, it focuses on detecting Remote Desktop (RDP) sessions and session unlocks.
+## Why it Matters
+This is critical for detecting 'session hijacking' or identifying users who remain logged into sensitive systems after business hours.
 
-## Log Source
-- **Index:** `wineventlog`
-- **Sourcetype:** `WinEventLog:Security`
-- **Event ID:** `4624` (Successful Logon)
+### The Methodology (The "How")
+In this lab the tools used are
+1. Two windows Virtual Machine
+2. Splunk Enterprise
 
-## Investigation Methodology
-I identified remote access by filtering for specific **Logon Types**:
-- **Type 10:** New Remote Interactive (RDP).
-- **Type 7:** Session Unlock (used to identify users returning to a remote session).
+The first thing I did was enable Remote access on my virtual machines and connect both VMS
+<img width="394" height="241" alt="image" src="https://github.com/user-attachments/assets/1b9119a5-56db-48b2-86ba-40164b303ecc" />
+install splunk enterprise(Free trial) on one of the vms, which I would technically generate logs from.
+After successful Access, Next is to access splunk for the analysis.
+<img width="1895" height="425" alt="image" src="https://github.com/user-attachments/assets/6816e86f-fc29-4f8e-851b-75151605e4aa" />
+From splunk we could see that, there are 20,000 logs, and having to analyse 20,000 logs is a lot, so we would apply filter to point out the remote access.
 
-### Primary Search Query
-```splunk
-index=wineventlog EventCode=4624 (Logon_Type=10 OR Logon_Type=7)
-| table _time, ComputerName, Account_Name, Logon_Type, Source_Network_Address
+The event code for Remote access is 4624 , so we run the * EventCode=4624 in splunk
+<img width="1884" height="374" alt="image" src="https://github.com/user-attachments/assets/4b840e45-012a-4501-b177-6f964da0adc2" />
+Next thing is to figure out what the IP address of where the connection is, so we read the logs for the IP
+<img width="1893" height="1009" alt="Screenshot 2026-04-07 115410" src="https://github.com/user-attachments/assets/dd769fd4-3c9b-4880-963c-6c6905a13bd0" />
+
+After finding the IP we filter for the IP
+<img width="1912" height="331" alt="image" src="https://github.com/user-attachments/assets/2657f873-3592-41e7-8b5d-2f89b6372307" />
+
+Next we check all activity to find out if anything malicious was done.
+
+
+
+
+
+
+
 
