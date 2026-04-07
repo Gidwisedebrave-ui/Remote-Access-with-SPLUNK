@@ -1,19 +1,15 @@
-# Remote Access Investigation via Splunk
+## Objective of this lab
+"The goal of this investigation was to identify potential unauthorized remote access to the DESKTOP-AG7VA7Q workstation. Using Splunk, I filtered security logs to isolate successful logons originating from remote IP addresses, successfully identifying a remote session resume by the user HP from source IP 192.168.1.188."
 
-## Overview
-This project documents the process of identifying remote access events on Windows systems using Splunk. Specifically, it focuses on detecting Remote Desktop (RDP) sessions and session unlocks.
+## Why it Matters
+This is critical for detecting 'session hijacking' or identifying users who remain logged into sensitive systems after business hours.
 
-## Log Source
-- **Index:** `wineventlog`
-- **Sourcetype:** `WinEventLog:Security`
-- **Event ID:** `4624` (Successful Logon)
+### The Methodology (The "How")
+In this lab the tools used are
+1. Two windows Virtual Machine
+2. Splunk Enterprise
 
-## Investigation Methodology
-I identified remote access by filtering for specific **Logon Types**:
-- **Type 10:** New Remote Interactive (RDP).
-- **Type 7:** Session Unlock (used to identify users returning to a remote session).
+The first thing I did was enable Remote access on my virtual machines and connect both VMS
 
-### Primary Search Query
-```splunk
-index=wineventlog EventCode=4624 (Logon_Type=10 OR Logon_Type=7)
-| table _time, ComputerName, Account_Name, Logon_Type, Source_Network_Address
+
+install splunk enterprise(Free trial) on one of the vms, which I would technically generate logs from.
