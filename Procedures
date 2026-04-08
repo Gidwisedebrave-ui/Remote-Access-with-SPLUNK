@@ -24,7 +24,10 @@ Next thing is to figure out what the IP address of where the connection is, so w
 After finding the IP we filter for the IP
 <img width="1912" height="331" alt="image" src="https://github.com/user-attachments/assets/2657f873-3592-41e7-8b5d-2f89b6372307" />
 
-Next we check all activity to find out if anything malicious was done.
+Next thing to do after detecting the Ip is to
+1. Correlate the IP against a lookup table of known malicious actors or watchlists. If the IP matches a known C2 (Command & Control) server, escalate immediately.
+2. If a specific internal user is tied to the IP, reach out to confirm if they are traveling or using authorized remote access software like AnyDesk or TeamViewer.
+3. 
 
 
 
